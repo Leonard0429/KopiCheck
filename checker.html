@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scam Checker | KopiCheck</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="KopiCheck home">
+        <img class="brand-logo" src="assets/KopiCheckLogo.png" alt="" data-fallback>
+        <span class="brand-mark brand-fallback">K</span>
+        <span>KopiCheck</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="checker.html">Scam Checker</a>
+        <a href="guide.html">Scam Guide</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="about.html">About / Team</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero compact">
+      <p class="eyebrow">Try the process</p>
+      <h1>Scam Checker</h1>
+      <p>Use KopiCheck on Telegram for the real AI analysis, or try the simple rule-based demo below.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Telegram Bot Steps</p>
+        <h2>How to use KopiCheck</h2>
+      </div>
+      <div class="card-grid four">
+        <article class="info-card numbered">
+          <span class="number-badge">1</span>
+          <h3>Copy a suspicious SMS, email, or link</h3>
+          <p>Copy the message content that looks unusual, urgent, or unsafe.</p>
+        </article>
+        <article class="info-card numbered">
+          <span class="number-badge">2</span>
+          <h3>Open KopiCheck on Telegram</h3>
+          <p>Use the Telegram bot so the message can be checked quickly.</p>
+        </article>
+        <article class="info-card numbered">
+          <span class="number-badge">3</span>
+          <h3>Paste the message</h3>
+          <p>Send the suspicious content to the bot without clicking any links.</p>
+        </article>
+        <article class="info-card numbered">
+          <span class="number-badge">4</span>
+          <h3>Read the risk and advice</h3>
+          <p>Review the scam risk level, warning signs, and safe advice before acting.</p>
+        </article>
+      </div>
+      <div class="center-action">
+        <a class="button primary" href="https://t.me/KopiCheckBot" target="_blank" rel="noopener">Try KopiCheck Bot</a>
+      </div>
+    </section>
+
+    <section class="section checker-section">
+      <div class="checker-copy">
+        <p class="eyebrow">Demo Simulator</p>
+        <h2>Check an example message</h2>
+        <p>This demo uses simple keyword rules, not AI API calls. It shows the product idea while keeping the real AI workflow safely inside the Telegram bot.</p>
+      </div>
+      <div class="checker-box">
+        <label for="messageInput">Paste a sample suspicious message</label>
+        <textarea id="messageInput" rows="7" placeholder="Example: Your bank account is suspended. Click https://example.com to verify now."></textarea>
+        <button class="button primary full-width" id="checkButton" type="button">Check Example</button>
+        <div class="result-box" id="resultBox" aria-live="polite">
+          <strong>Scam Risk:</strong>
+          <span>Paste a message to see the demo result.</span>
+        </div>
+        <p class="small-note">This website demo uses simple rules for illustration. The full AI analysis happens in the KopiCheck Telegram bot powered by n8n and AI.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>KopiCheck - AI Essentials Final Project</p>
+    <p>KopiCheck provides scam awareness support and does not replace official advice from banks, Singpass, government agencies, or law enforcement.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

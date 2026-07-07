@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works | KopiCheck</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="KopiCheck home">
+        <img class="brand-logo" src="assets/KopiCheckLogo.png" alt="" data-fallback>
+        <span class="brand-mark brand-fallback">K</span>
+        <span>KopiCheck</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="checker.html">Scam Checker</a>
+        <a href="guide.html">Scam Guide</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="about.html">About / Team</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero compact">
+      <p class="eyebrow">Project evidence</p>
+      <h1>How It Works</h1>
+      <p>KopiCheck combines a Telegram interface, automation workflow, AI analysis, and Google Sheets evidence logs.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Workflow</p>
+        <h2>Simple system flow</h2>
+      </div>
+      <div class="workflow">
+        <div class="workflow-step">User sends suspicious message</div>
+        <div class="workflow-step">Telegram Bot receives it</div>
+        <div class="workflow-step">n8n workflow processes it</div>
+        <div class="workflow-step">AI Agent analyses the message</div>
+        <div class="workflow-step">Google Sheets Knowledge Base supports the response</div>
+        <div class="workflow-step">Bot replies with risk level and safety advice</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Technical Stack</p>
+        <h2>Tools used to build KopiCheck</h2>
+      </div>
+      <div class="card-grid">
+        <article class="info-card">
+          <span class="card-icon">&#128172;</span>
+          <h3>Telegram Bot</h3>
+          <p>The user-facing chat interface where users submit suspicious messages.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-icon">&#128257;</span>
+          <h3>n8n</h3>
+          <p>Automation workflow that connects Telegram, the AI Agent, and logging steps.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-icon">&#129504;</span>
+          <h3>AI Agent</h3>
+          <p>Analyses scam risk and explains warning signs in simple language.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-icon">&#128161;</span>
+          <h3>OpenRouter/DeepSeek</h3>
+          <p>Language model used for the AI response through the workflow.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-icon">&#128172;</span>
+          <h3>Memory</h3>
+          <p>Helps maintain short conversation context during the bot interaction.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-icon">&#128203;</span>
+          <h3>Google Sheets Knowledge Base</h3>
+          <p>Stores scam types, warning signs, examples, and safe advice.</p>
+        </article>
+        <article class="info-card">
+          <span class="card-icon">&#129514;</span>
+          <h3>Google Sheets Testing Log</h3>
+          <p>Records test cases, expected results, actual results, and improvements.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section screenshots-section">
+      <div class="section-heading">
+        <p class="eyebrow">Screenshots</p>
+        <h2>Project evidence screenshots</h2>
+      </div>
+      <div class="screenshot-grid">
+        <article class="screenshot-card">
+          <!-- Replace or update this image with the final Telegram bot screenshot. -->
+          <a class="screenshot-link screenshot-frame" href="assets/telegram-bot.png" target="_blank" rel="noopener">
+            <img class="screenshot-image" src="assets/telegram-bot.png" alt="KopiCheck Telegram bot screenshot" data-fallback>
+          </a>
+          <div class="placeholder-image image-fallback">Screenshot not available yet</div>
+          <h3>Telegram Bot Screenshot</h3>
+          <p>Shows the user-facing chat where a suspicious message is checked.</p>
+          <p class="screenshot-hint">Click to view full screenshot</p>
+        </article>
+        <article class="screenshot-card">
+          <!-- Replace or update this image with the final n8n workflow screenshot. -->
+          <a class="screenshot-link screenshot-frame" href="assets/n8n-workflow.png" target="_blank" rel="noopener">
+            <img class="screenshot-image" src="assets/n8n-workflow.png" alt="n8n workflow screenshot" data-fallback>
+          </a>
+          <div class="placeholder-image image-fallback">Screenshot not available yet</div>
+          <h3>n8n Workflow Screenshot</h3>
+          <p>Shows the automation flow used to route messages through the bot and AI logic.</p>
+          <p class="screenshot-hint">Click to view full screenshot</p>
+        </article>
+        <article class="screenshot-card">
+          <!-- Replace or update this image with the final AI Agent prompt screenshot. -->
+          <a class="screenshot-link screenshot-frame" href="assets/ai-agent-prompt.png" target="_blank" rel="noopener">
+            <img class="screenshot-image" src="assets/ai-agent-prompt.png" alt="AI Agent prompt screenshot" data-fallback>
+          </a>
+          <div class="placeholder-image image-fallback">Screenshot not available yet</div>
+          <h3>AI Agent Prompt Screenshot</h3>
+          <p>Shows the prompt setup that guides scam-risk analysis and safety advice.</p>
+          <p class="screenshot-hint">Click to view full screenshot</p>
+        </article>
+        <article class="screenshot-card">
+          <!-- Replace or update this image with the final Google Sheets knowledge base screenshot. -->
+          <a class="screenshot-link screenshot-frame" href="assets/knowledge-base.png" target="_blank" rel="noopener">
+            <img class="screenshot-image" src="assets/knowledge-base.png" alt="Google Sheets knowledge base screenshot" data-fallback>
+          </a>
+          <div class="placeholder-image image-fallback">Screenshot not available yet</div>
+          <h3>Knowledge Base Screenshot</h3>
+          <p>Shows scam types, warning signs, and safe-response guidance used by the project.</p>
+          <p class="screenshot-hint">Click to view full screenshot</p>
+        </article>
+        <article class="screenshot-card">
+          <!-- Replace or update this image with the final Google Sheets testing log screenshot. -->
+          <a class="screenshot-link screenshot-frame" href="assets/testing-log.png" target="_blank" rel="noopener">
+            <img class="screenshot-image" src="assets/testing-log.png" alt="Google Sheets testing log screenshot" data-fallback>
+          </a>
+          <div class="placeholder-image image-fallback">Screenshot not available yet</div>
+          <h3>Testing Log Screenshot</h3>
+          <p>Shows tested inputs, observed bot responses, and project QA evidence.</p>
+          <p class="screenshot-hint">Click to view full screenshot</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section evidence-section">
+      <div class="section-heading">
+        <p class="eyebrow">Project Evidence</p>
+        <h2>Built and tested as a complete AI workflow</h2>
+      </div>
+      <div class="evidence-list">
+        <div class="evidence-item">Telegram bot tested with realistic scam examples.</div>
+        <div class="evidence-item">n8n workflow used for routing, AI logic, and response handling.</div>
+        <div class="evidence-item">Google Sheets used for the scam knowledge base and testing log.</div>
+        <div class="evidence-item">Rule-based website demo included for illustration only.</div>
+        <div class="evidence-item">Full AI analysis happens in the KopiCheck Telegram bot.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>KopiCheck - AI Essentials Final Project</p>
+    <p>KopiCheck provides scam awareness support and does not replace official advice from banks, Singpass, government agencies, or law enforcement.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
