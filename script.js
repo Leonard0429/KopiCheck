@@ -44,7 +44,8 @@ document.querySelectorAll(".nav-links a").forEach((link) => {
 
 const checkButton = document.querySelector("#checkButton");
 const messageInput = document.querySelector("#messageInput");
-const resultBox = document.querySelector("#resultBox");
+const chatMessages = document.querySelector("#chatMessages");
+const N8N_TIMEOUT_MS = 45000;
 
 const highRiskKeywords = [
   "otp",
@@ -102,50 +103,251 @@ function buildReasons(level, matches) {
   return reasons.slice(0, 3);
 }
 
-function updateResult(level, matches) {
-  const reasons = buildReasons(level, matches);
+function normaliseRiskClass(level) {
+  const riskLevel = String(level || "").toLowerCase();
 
-  resultBox.className = `result-box ${level.toLowerCase()}`;
-  resultBox.innerHTML = `
-    <strong>Scam Risk: ${level}</strong>
-    <div class="result-detail">
-      <h4>Why:</h4>
-      <ul>
-        ${reasons.map((reason) => `<li>${reason}</li>`).join("")}
-      </ul>
-      <h4>What you should do:</h4>
-      <ul>
-        <li>Do not click suspicious links.</li>
-        <li>Do not share OTP, password, NRIC, Singpass, or bank details.</li>
-        <li>Contact the organisation through official channels.</li>
-      </ul>
-    </div>
-  `;
+  if (riskLevel.includes("high")) {
+    return "high";
+  }
+
+  if (riskLevel.includes("medium")) {
+    return "medium";
+  }
+
+  if (riskLevel.includes("low")) {
+    return "low";
+  }
+
+  return "";
 }
 
-if (checkButton && messageInput && resultBox) {
-  checkButton.addEventListener("click", () => {
-    const message = messageInput.value.trim().toLowerCase();
-
-    if (!message) {
-      resultBox.className = "result-box";
-      resultBox.innerHTML = "<strong>Scam Risk:</strong><span>Please paste a message first.</span>";
-      return;
+function appendTextWithLineBreaks(parent, text) {
+  String(text).split(/\r?\n/).forEach((line, index) => {
+    if (index > 0) {
+      parent.appendChild(document.createElement("br"));
     }
 
-    const highMatches = getMatchedKeywords(message, highRiskKeywords);
-    const mediumMatches = getMatchedKeywords(message, mediumRiskKeywords);
+    parent.appendChild(document.createTextNode(line));
+  });
+}
 
-    if (highMatches.length > 0) {
-      updateResult("High", highMatches);
-      return;
+function buildLocalRuleResponse(level, matches) {
+  const reasons = buildReasons(level, matches);
+
+  return [
+    `Scam Risk: ${level}`,
+    "",
+    "Why:",
+    ...reasons.map((reason) => `- ${reason}`),
+    "",
+    "What you should do:",
+    "- Do not click suspicious links.",
+    "- Do not share OTP, password, NRIC, Singpass, or bank details.",
+    "- Contact the organisation through official channels."
+  ].join("\n");
+}
+
+function scrollChatToLatest() {
+  if (chatMessages) {
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+}
+
+function createChatBubble(sender, message, riskLevel = "") {
+  if (!chatMessages) {
+    return null;
+  }
+
+  const bubble = document.createElement("div");
+  const riskClass = sender === "bot" ? normaliseRiskClass(riskLevel) : "";
+  bubble.className = ["chat-message", sender, riskClass].filter(Boolean).join(" ");
+
+  const messageText = document.createElement("div");
+  messageText.className = "chat-message-text";
+  appendTextWithLineBreaks(messageText, message);
+
+  bubble.appendChild(messageText);
+  chatMessages.appendChild(bubble);
+  scrollChatToLatest();
+
+  return bubble;
+}
+
+function replaceBubbleMessage(bubble, message, riskLevel = "") {
+  if (!bubble) {
+    return;
+  }
+
+  const riskClass = normaliseRiskClass(riskLevel);
+  bubble.className = ["chat-message", "bot", riskClass].filter(Boolean).join(" ");
+  bubble.textContent = "";
+
+  const messageText = document.createElement("div");
+  messageText.className = "chat-message-text";
+  appendTextWithLineBreaks(messageText, message);
+
+  bubble.appendChild(messageText);
+  scrollChatToLatest();
+}
+
+function runLocalRuleChecker(userMessage) {
+  const message = userMessage.trim().toLowerCase();
+  const highMatches = getMatchedKeywords(message, highRiskKeywords);
+  const mediumMatches = getMatchedKeywords(message, mediumRiskKeywords);
+
+  if (highMatches.length > 0) {
+    return {
+      risk: "High",
+      reply: buildLocalRuleResponse("High", highMatches)
+    };
+  }
+
+  if (mediumMatches.length > 0) {
+    return {
+      risk: "Medium",
+      reply: buildLocalRuleResponse("Medium", mediumMatches)
+    };
+  }
+
+  return {
+    risk: "Low",
+    reply: buildLocalRuleResponse("Low", [])
+  };
+}
+
+async function checkWithN8n(userMessage) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), N8N_TIMEOUT_MS);
+
+  try {
+    const response = await fetch("https://n8ngc.codeblazar.org/webhook/kopicheck-web-check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: userMessage
+      }),
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      throw new Error(`Webhook returned HTTP ${response.status}`);
     }
 
-    if (mediumMatches.length > 0) {
-      updateResult("Medium", mediumMatches);
-      return;
+    const responseText = await response.text();
+
+    if (!responseText.trim()) {
+      throw new Error("n8n returned an empty response");
     }
 
-    updateResult("Low", []);
+    try {
+      return JSON.parse(responseText);
+    } catch (error) {
+      console.error("Raw n8n response:", responseText);
+      throw new Error("n8n returned invalid JSON");
+    }
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+function getObjectValue(data) {
+  if (Array.isArray(data)) {
+    return data[0];
+  }
+
+  return data;
+}
+
+function getN8nResult(data) {
+  const root = getObjectValue(data);
+
+  if (!root || typeof root !== "object") {
+    throw new Error("KopiCheck AI checker returned an empty response");
+  }
+
+  const output = root.output && typeof root.output === "object" ? getObjectValue(root.output) : {};
+  const nestedOutput = output.output && typeof output.output === "object" ? getObjectValue(output.output) : {};
+  const risk = root.riskLevel || root.risk || output.risk || nestedOutput.risk || "";
+  const reply = root.reply || output.reply || nestedOutput.reply;
+
+  if (!reply || typeof reply !== "string") {
+    throw new Error("KopiCheck AI checker response is missing a reply");
+  }
+
+  return { risk, reply };
+}
+
+function replyAlreadyIncludesRisk(reply) {
+  return /scam\s+risk\s*:/i.test(reply) || /^risk\s*:/im.test(reply);
+}
+
+function buildN8nReplyText(data) {
+  const { risk, reply } = getN8nResult(data);
+  const shouldAddRisk = risk && !replyAlreadyIncludesRisk(reply);
+
+  return {
+    risk,
+    reply: shouldAddRisk ? `Scam Risk: ${risk}\n\n${reply}` : reply
+  };
+}
+
+function getFallbackNotice(error) {
+  if (error && error.name === "AbortError") {
+    return "KopiCheck took too long to respond. Showing a simple website estimate instead.";
+  }
+
+  return "AI checker is temporarily unavailable. Showing a simple website estimate instead.";
+}
+
+async function sendChatMessage() {
+  if (!checkButton || !messageInput || !chatMessages || checkButton.disabled) {
+    return;
+  }
+
+  const message = messageInput.value.trim();
+
+  if (!message) {
+    return;
+  }
+
+  createChatBubble("user", message);
+  messageInput.value = "";
+  checkButton.disabled = true;
+
+  const loadingBubble = createChatBubble("bot", "KopiCheck is checking your message...");
+
+  try {
+    const n8nData = await checkWithN8n(message);
+    const n8nResult = buildN8nReplyText(n8nData);
+    replaceBubbleMessage(loadingBubble, n8nResult.reply, n8nResult.risk);
+  } catch (error) {
+    console.error(error);
+    const fallbackResult = runLocalRuleChecker(message);
+    replaceBubbleMessage(
+      loadingBubble,
+      `${getFallbackNotice(error)}\n\n${fallbackResult.reply}`,
+      fallbackResult.risk
+    );
+  } finally {
+    checkButton.disabled = false;
+    messageInput.focus();
+  }
+}
+
+if (checkButton && messageInput && chatMessages) {
+  createChatBubble(
+    "bot",
+    "\u2615 Hello! I\u2019m KopiCheck. Paste a suspicious SMS, WhatsApp message, email, or link below, and I\u2019ll help you check it."
+  );
+
+  checkButton.addEventListener("click", sendChatMessage);
+
+  messageInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendChatMessage();
+    }
   });
 }

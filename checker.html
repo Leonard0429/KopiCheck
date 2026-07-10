@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scam Checker | KopiCheck</title>
+  <title>KopiCheck Chatbot | KopiCheck</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -22,6 +22,7 @@
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="checker.html">Scam Checker</a>
+        <a href="chatbot.html">Try Chatbot</a>
         <a href="guide.html">Scam Guide</a>
         <a href="how-it-works.html">How It Works</a>
         <a href="about.html">About / Team</a>
@@ -32,14 +33,14 @@
   <main>
     <section class="page-hero compact">
       <p class="eyebrow">Try the process</p>
-      <h1>Scam Checker</h1>
-      <p>Use KopiCheck on Telegram for the real AI analysis, or try the simple rule-based demo below.</p>
+      <h1>KopiCheck Chatbot</h1>
+      <p>Chat with KopiCheck to ask scam questions or check suspicious SMS, WhatsApp messages, emails, and links.</p>
     </section>
 
     <section class="section">
       <div class="section-heading">
-        <p class="eyebrow">Telegram Bot Steps</p>
-        <h2>How to use KopiCheck</h2>
+        <p class="eyebrow">Website Chatbot Steps</p>
+        <h2>How to use the KopiCheck chatbot</h2>
       </div>
       <div class="card-grid four">
         <article class="info-card numbered">
@@ -49,13 +50,13 @@
         </article>
         <article class="info-card numbered">
           <span class="number-badge">2</span>
-          <h3>Open KopiCheck on Telegram</h3>
-          <p>Use the Telegram bot so the message can be checked quickly.</p>
+          <h3>Paste it into the website chatbot</h3>
+          <p>Use the chat box below to send the message without clicking any links.</p>
         </article>
         <article class="info-card numbered">
           <span class="number-badge">3</span>
-          <h3>Paste the message</h3>
-          <p>Send the suspicious content to the bot without clicking any links.</p>
+          <h3>Ask questions if needed</h3>
+          <p>You can also ask general questions such as what a scam is or how to stay safe.</p>
         </article>
         <article class="info-card numbered">
           <span class="number-badge">4</span>
@@ -70,19 +71,20 @@
 
     <section class="section checker-section">
       <div class="checker-copy">
-        <p class="eyebrow">Demo Simulator</p>
-        <h2>Check an example message</h2>
-        <p>This demo uses simple keyword rules, not AI API calls. It shows the product idea while keeping the real AI workflow safely inside the Telegram bot.</p>
+        <p class="eyebrow">AI Chatbot</p>
+        <h2>Chat with KopiCheck</h2>
+        <p>Send a greeting, ask a scam-safety question, or paste a suspicious message. KopiCheck will try the AI checker first, then use a simple website estimate if the AI checker is unavailable.</p>
       </div>
       <div class="checker-box">
-        <label for="messageInput">Paste a sample suspicious message</label>
-        <textarea id="messageInput" rows="7" placeholder="Example: Your bank account is suspended. Click https://example.com to verify now."></textarea>
-        <button class="button primary full-width" id="checkButton" type="button">Check Example</button>
-        <div class="result-box" id="resultBox" aria-live="polite">
-          <strong>Scam Risk:</strong>
-          <span>Paste a message to see the demo result.</span>
+        <div class="chat-window" aria-label="KopiCheck chatbot conversation">
+          <div class="chat-messages" id="chatMessages" aria-live="polite" aria-label="Chat messages"></div>
+          <div class="chat-input-area">
+            <label for="messageInput">Type or paste your message</label>
+            <textarea id="messageInput" rows="3" placeholder="Example: Your bank account is suspended. Click https://example.com to verify now."></textarea>
+            <button class="button primary full-width" id="checkButton" type="button">Send Message</button>
+          </div>
         </div>
-        <p class="small-note">This website demo uses simple rules for illustration. The full AI analysis happens in the KopiCheck Telegram bot powered by n8n and AI.</p>
+        <p class="small-note">KopiCheck gives scam awareness support. Always verify important messages through official channels before acting.</p>
       </div>
     </section>
   </main>

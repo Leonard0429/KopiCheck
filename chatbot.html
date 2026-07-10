@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Chatbot | KopiCheck</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a class="brand" href="index.html" aria-label="KopiCheck home">
+        <img class="brand-logo" src="assets/KopiCheckLogo.png" alt="" data-fallback>
+        <span class="brand-mark brand-fallback">K</span>
+        <span>KopiCheck</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="checker.html">Scam Checker</a>
+        <a href="chatbot.html">Try Chatbot</a>
+        <a href="guide.html">Scam Guide</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="about.html">About / Team</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero compact">
+      <p class="eyebrow">Website chatbot</p>
+      <h1>KopiCheck Chatbot</h1>
+      <p>Use the website chatbot for quick scam questions and suspicious-message checks. You can also open the Telegram version if you prefer chatting on your phone.</p>
+    </section>
+
+    <section class="section chatbot-section">
+      <div class="checker-box chatbot-main">
+        <div class="chat-window" aria-label="KopiCheck website chatbot conversation">
+          <div class="chat-messages" id="chatMessages" aria-live="polite" aria-label="Chat messages"></div>
+          <div class="chat-input-area">
+            <label for="messageInput">Type or paste your message</label>
+            <textarea id="messageInput" rows="3" placeholder="Example: Singpass Alert: Your account will be disabled within 24 hours. Confirm your NRIC and OTP now."></textarea>
+            <button class="button primary full-width" id="checkButton" type="button">Send Message</button>
+          </div>
+        </div>
+        <p class="small-note">KopiCheck gives scam awareness support. Always verify important messages through official channels before acting.</p>
+      </div>
+
+      <aside class="telegram-panel" aria-label="Telegram chatbot option">
+        <p class="eyebrow">Telegram option</p>
+        <h2>Prefer chatting on your phone?</h2>
+        <p>Use the website chatbot here, or open the Telegram version if you prefer chatting on your phone.</p>
+        <p>The website chatbot runs in this browser. The Telegram chatbot opens KopiCheck in Telegram, which may feel more natural for mobile users.</p>
+        <a class="button primary full-width" href="https://t.me/KopiCheckBot" target="_blank" rel="noopener noreferrer">Prefer Telegram? Chat with KopiCheck</a>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>KopiCheck - AI Essentials Final Project</p>
+    <p>KopiCheck provides scam awareness support and does not replace official advice from banks, Singpass, government agencies, or law enforcement.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
